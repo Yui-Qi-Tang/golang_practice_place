@@ -6,12 +6,6 @@ func init() {
 	arraySize = 10
 }
 
-func ShowArrayInfo() {
-	// fmt.Println(arraySize)
-	// array := makeArray()
-	// fmt.Println(array)
-}
-
 func getArraySize() int {
 	return arraySize
 }
@@ -27,7 +21,7 @@ func SetArraySize(targetArray []int) {
             max = targetArray[i]
 		}
 	}
-	arraySize = max
+	arraySize = max + 1 // To prevent index out of range
 }
 
 func RemoveDupElement(targetArray []int) []int {
