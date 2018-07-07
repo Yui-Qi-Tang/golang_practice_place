@@ -22,8 +22,14 @@ func makeArray() []int {
 	return make([]int, arraySize, arraySize)
 }
 
-func SetArraySize(newArraySize int) {
-	arraySize = newArraySize
+func SetArraySize(targetArray []int) {
+	max := len(targetArray)
+    for i:=0; i<len(targetArray); i++{
+        if targetArray[i] > max {
+            max = targetArray[i]
+		}
+	}
+	arraySize = max
 }
 
 func RemoveDupElement(targetArray []int) []int {
@@ -31,7 +37,7 @@ func RemoveDupElement(targetArray []int) []int {
 	for i:=0; i<len(targetArray); i++ {
 		countsArray[targetArray[i]]++
 		tmp := countsArray[targetArray[i]]
-		if tmp >= 2{
+		if tmp >= 2 {
 			targetArray[i] = -1
 		}
 	}
