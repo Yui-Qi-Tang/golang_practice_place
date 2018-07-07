@@ -1,3 +1,2 @@
-# golang_practice
-
-My package is unavailiable now QQ
+# my golang_practice_space
+Hi
