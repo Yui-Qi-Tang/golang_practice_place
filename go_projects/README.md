@@ -1,2 +1,4 @@
 # my golang_practice_space
-Hi
+
+Use gvm to set GO env.
+// write detail later...
