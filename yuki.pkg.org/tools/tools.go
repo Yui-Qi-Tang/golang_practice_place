@@ -1,7 +1,5 @@
 package tools
 
-// import "fmt"
-
 var arraySize int // private
 
 func init() {
