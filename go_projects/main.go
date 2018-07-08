@@ -23,8 +23,7 @@ func main() {
 	/*
 		Print the init string of sayhi package, and use SayHi function exported from package
 	*/
-	helloString := tester.SayHi()
-	fmt.Println(helloString)
+	tester.SayHi() // return "Hi"
 	
 	/*
 		A practice for golang that remove duplicated element of a integer array in O(n)
@@ -32,6 +31,7 @@ func main() {
 	target := []int{1, 2, 3, 3, 19, 6, 6}
 	tools.SetArraySize(target)
 	newArray := tools.RemoveDupElement(target)
+	fmt.Println("The duplicated element answer: ")
 	fmt.Println(newArray)
 	
 	/*

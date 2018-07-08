@@ -26,6 +26,9 @@ package tools
 	where RemoveFromTargetArray(index) is a function to remove element of Target array by index,
 	for now, the I set Target array[index] = -1 if valueCounts > 2 instead of this function.
 */
+import (
+	"yuki.pkg.org/tools/logger"
+)
 
 var arraySize int // private
 
@@ -61,5 +64,6 @@ func RemoveDupElement(targetArray []int) []int {
 			targetArray[i] = -1
 		}
 	}
+	logger.InfoLog("remove duplicated element done!", "in tools/tools.go")
 	return targetArray
 }

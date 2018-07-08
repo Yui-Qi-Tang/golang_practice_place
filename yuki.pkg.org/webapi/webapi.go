@@ -6,6 +6,7 @@ package webapi // this is package name
 
 import (
 	"github.com/gin-gonic/gin"
+	"yuki.pkg.org/tools/logger"
 )
 
 func RunGoGin() {
@@ -20,5 +21,6 @@ func RunGoGin() {
 			"message": "Hello!!",
 		})
 	})
+	logger.InfoLog("create web service done!", "in webapi/webapi.go")
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
