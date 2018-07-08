@@ -1,9 +1,11 @@
+/*
+    logrus sample
+*/
 package logger
 
 import (
 	"github.com/sirupsen/logrus"
 )
-
 
 func setLogInfo(msgField string, infoText string) {
     logrus.WithFields(logrus.Fields{
