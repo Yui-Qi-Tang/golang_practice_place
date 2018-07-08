@@ -5,8 +5,7 @@
 	@version: 0.1
 	@Author: Yui-Qi Tang
 	@Created: 2018/07/08
-	@TODO: 1. add go log package
-		   2. add golang base type practice
+	@TODO: 2. add golang base type practice
 		   3. remove -1 from result of tools.RemoveDupElement()
 */
 package main // this is package name
@@ -15,7 +14,7 @@ import (
 	"fmt"
 	tester "yuki.pkg.org/sayhi"
 	tools "yuki.pkg.org/tools"
-	apiRunner "yuki.pkg.org/webapi"
+	// apiRunner "yuki.pkg.org/webapi"
 )
 
 
@@ -37,5 +36,5 @@ func main() {
 	/*
 	    Just run gogin web framework
 	*/
-	apiRunner.RunGoGin()	
+	// apiRunner.RunGoGin()	
 }
