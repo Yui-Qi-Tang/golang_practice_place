@@ -17,7 +17,7 @@ func main() {
 	
 	// tools.SetArraySize(50)
 	// TODO: get max value of target array and set array size
-	target := []int{1,2,3,3,19} // each element in target that is positive integer!!
+	target := []int{1, 2, 3, 3, 19, 6, 6} // each element in target that is positive integer!!
 	tools.SetArraySize(target)
 	// tools.ShowArrayInfo()
 	newArray := tools.RemoveDupElement(target)
