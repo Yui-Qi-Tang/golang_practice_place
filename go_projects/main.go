@@ -1,25 +1,41 @@
+/*
+	@Description: This is a fun project for golang.
+	              It's my practice.
+	              Just for fun.
+	@version: 0.1
+	@Author: Yui-Qi Tang
+	@Created: 2018/07/08
+	@TODO: 1. add go log package
+		   2. add golang base type practice
+		   3. remove -1 from result of tools.RemoveDupElement()
+*/
 package main // this is package name
 
 import (
 	"fmt"
-	// tester "yuki.pkg.org/sayhi"
+	tester "yuki.pkg.org/sayhi"
 	tools "yuki.pkg.org/tools"
-	// apiRunner "yuki.pkg.org/webapi"
+	apiRunner "yuki.pkg.org/webapi"
 )
 
 
 func main() {
-	//fmt.Println("Hello world")
-	//val := tester.SayHi()
-	// fmt.Println(val)
+	/*
+		Print the init string of sayhi package, and use SayHi function exported from package
+	*/
+	helloString := tester.SayHi()
+	fmt.Println(helloString)
 	
-	// apiRunner.RunGoGin()	
-	
-	// tools.SetArraySize(50)
-	// TODO: get max value of target array and set array size
-	target := []int{1, 2, 3, 3, 19, 6, 6} // each element in target that is positive integer!!
+	/*
+		A practice for golang that remove duplicated element of a integer array in O(n)
+	*/	
+	target := []int{1, 2, 3, 3, 19, 6, 6}
 	tools.SetArraySize(target)
-	// tools.ShowArrayInfo()
 	newArray := tools.RemoveDupElement(target)
-    fmt.Println(newArray)
+	fmt.Println(newArray)
+	
+	/*
+	    Just run gogin web framework
+	*/
+	apiRunner.RunGoGin()	
 }
