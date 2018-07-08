@@ -1,8 +1,11 @@
 package webapi // this is package name
 
+/*
+    Usage: import this package and run '{rename_this_package_or_use_default}.RunGoGin()' in your main sapce
+*/
+
 import (
 	"github.com/gin-gonic/gin"
-	// "os"
 )
 
 func RunGoGin() {

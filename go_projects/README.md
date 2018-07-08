@@ -1,3 +1,4 @@
-# golang_practice
+# my golang_practice_space
 
-My package is unavailiable now QQ
+Use gvm to set GO env.
+// write detail later...
