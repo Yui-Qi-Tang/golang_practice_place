@@ -5,8 +5,7 @@
 	@version: 0.1
 	@Author: Yui-Qi Tang
 	@Created: 2018/07/08
-	@TODO: 2. add golang base type practice
-		   3. remove -1 from result of tools.RemoveDupElement()
+	@TODO: 3. remove -1 from result of tools.RemoveDupElement()
 */
 package main // this is package name
 
