@@ -15,6 +15,7 @@ import (
 	tester "yuki.pkg.org/sayhi"
 	tools "yuki.pkg.org/tools"
 	// apiRunner "yuki.pkg.org/webapi"
+	"yuki.pkg.org/basictypes"
 )
 
 
@@ -34,7 +35,26 @@ func main() {
 	fmt.Println(newArray)
 	
 	/*
+	    Basic type
+	*/
+
+	// :Create people instance and display
+	p1 := basictype.NewPerson("Yuki Tang", 29)
+	fmt.Printf("new people: %s, %d yaers old\n", p1.GetPersonName(), p1.GetPersonAges())
+	// p2 := basictype.NewPerson("Ann Ke", 25)
+	// fmt.Printf("new people: %s, %d yaers old\n", p2.GetPersonName(), p2.GetPersonAges())
+
+    // :display pointer value of p1 and p2
+	//p1ptr := &p1
+	//p2ptr := &p2
+	//fmt.Printf("%p and %p\n", p1ptr, p2ptr)
+
+    // :update name of p2
+	// p2.SetPersonName("Ann Tang")
+	// fmt.Println(p2.GetPersonName())
+
+	/*
 	    Just run gogin web framework
 	*/
-	// apiRunner.RunGoGin()	
+	// apiRunner.RunGoGin()
 }
