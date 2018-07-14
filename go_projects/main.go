@@ -15,6 +15,7 @@ import (
 	tools "yuki.pkg.org/tools"
 	// apiRunner "yuki.pkg.org/webapi"
 	"yuki.pkg.org/basictypes"
+	"yuki.pkg.org/serverpush"
 )
 
 
@@ -56,4 +57,9 @@ func main() {
 	    Just run gogin web framework
 	*/
 	// apiRunner.RunGoGin()
+
+	/*
+		Http2 sever push demo
+	*/
+	serverpush.Demonstration()
 }
