@@ -2,3 +2,5 @@
 ./*/gvm_local/
 ./vscode/
 ./gvm_local/
+.go-pkgset
+.go-version
