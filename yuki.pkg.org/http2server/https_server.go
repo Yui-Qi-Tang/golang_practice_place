@@ -39,6 +39,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
+	fmt.Println(r.UserAgent())
+
 	pusher, ok := w.(http.Pusher)
 	if ok {
 		// Push is supported. Try pushing rather than
