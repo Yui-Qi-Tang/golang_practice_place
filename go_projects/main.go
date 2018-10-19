@@ -15,7 +15,7 @@ import (
 	tools "yuki.pkg.org/tools"
 	// apiRunner "yuki.pkg.org/webapi"
 	"yuki.pkg.org/basictypes"
-	"yuki.pkg.org/serverpush"
+	// "yuki.pkg.org/serverpush"
 )
 
 
@@ -41,17 +41,35 @@ func main() {
 	// :Create people instance and display
 	p1 := basictype.NewPerson("Yuki Tang", 29)
 	fmt.Printf("new people: %s, %d yaers old\n", p1.GetPersonName(), p1.GetPersonAges())
-	// p2 := basictype.NewPerson("Ann Ke", 25)
-	// fmt.Printf("new people: %s, %d yaers old\n", p2.GetPersonName(), p2.GetPersonAges())
+	oldInfo := basictype.NewPerson(p1.GetPersonName(), p1.GetPersonAges())
+	p1.SetPersonName("Yui Qi Tang")
+	p1.SetPersonAges(30)
+	
+	fmt.Printf(
+		"update people name from: %s to: %s\n",
+		oldInfo.GetPersonName(),
+		p1.GetPersonName(),
+	)
+	
+	fmt.Printf(
+		"update people ages from: %d to: %d yaers old\n",
+		oldInfo.GetPersonAges(),
+		p1.GetPersonAges(),
+	)
+    // :display pointer value of p1
+	p1ptr := &p1
+	fmt.Printf("%p\n", p1ptr)
 
-    // :display pointer value of p1 and p2
-	//p1ptr := &p1
-	//p2ptr := &p2
-	//fmt.Printf("%p and %p\n", p1ptr, p2ptr)
-
-    // :update name of p2
-	// p2.SetPersonName("Ann Tang")
-	// fmt.Println(p2.GetPersonName())
+	// :group people
+	group1 := make(map[string]interface{
+		GetPersonName() string // for person struct GetPersonName()
+		GetPersonAges() int    // for person struct GetPersonAges()
+	})
+	group1["1st"] = p1
+	group1["2nd"] = basictype.NewPerson("Member 2", 15)
+	for k, v := range group1 {
+		fmt.Printf("Key: %s, Value: {%s, %d}\n", k, v.GetPersonName(), v.GetPersonAges())
+	}
 
 	/*
 	    Just run gogin web framework
@@ -61,5 +79,5 @@ func main() {
 	/*
 		Http2 sever push demo
 	*/
-	serverpush.Demonstration()
+	// serverpush.Demonstration()
 }
