@@ -70,6 +70,10 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func webSocketHandle(w http.ResponseWriter, r *http.Request) {
+	if r.Header.Get("Origin") != "https://"+r.Host {
+		http.Error(w, "Origin not allowed", 403)
+		return
+	}
 	conn, err := upgrader.Upgrade(w, r, nil)
     if err != nil {
         log.Println(err)
