@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"log"
 	"fmt"
+	"github.com/gorilla/websocket"
 	// "html/template"
 )
 
@@ -18,6 +19,15 @@ Hello, gopher!
 </body>
 </html>
 `
+
+var upgrader = websocket.Upgrader{
+    ReadBufferSize:  1024,
+    WriteBufferSize: 1024,
+}
+
+type msg struct {
+	Num int
+}
 
 
 func CreateServer(config *ServerConfig) {
@@ -59,7 +69,34 @@ func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, indexHTML)
 }
 
+func webSocketHandle(w http.ResponseWriter, r *http.Request) {
+	conn, err := upgrader.Upgrade(w, r, nil)
+    if err != nil {
+        log.Println(err)
+        return
+	}
+	go echo(conn)
+}
+
 func StartService() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/test", test)
+	http.HandleFunc("/socket/handler", webSocketHandle)
+}
+
+func echo(conn *websocket.Conn) {
+	for {
+		m := msg{}
+
+		err := conn.ReadJSON(&m)
+		if err != nil {
+			fmt.Println("Error reading json.", err)
+		}
+
+		fmt.Printf("Got message: %#v\n", m)
+
+		if err = conn.WriteJSON(m); err != nil {
+			fmt.Println(err)
+		}
+	}
 }
