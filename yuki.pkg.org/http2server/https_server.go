@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"log"
 	"fmt"
+	// "html/template"
 )
 
 const indexHTML = `<html>
@@ -22,6 +23,9 @@ Hello, gopher!
 func CreateServer(config *ServerConfig) {
 	log.Printf("start server at %s\n", config.Port)
 	// Set static file
+	// filter   "prefix" of the request and leave
+	//            request                          "prefix"                      file here
+	http.Handle("/chatroom/", http.StripPrefix("/chatroom/", http.FileServer(http.Dir(config.Static))))
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(config.Static))))
 	// functions
 	StartService()
