@@ -1,13 +1,7 @@
 package main
 
 import (
-	//"flag"
-	// "fmt"
-	//"log"
-	//"net/http"
-	//"./https_server"
 	"yuki.pkg.org/http2server"
-
 )
 
 
@@ -22,8 +16,4 @@ func main() {
 	http2server.CreateServer(
 		server_config,
 	)	
-
-// 	log.Fatal(
-// 		http.ListenAndServeTLS(":8080", "https_keys/server.crt", "https_keys/server.key", nil),
-// 	)
 }

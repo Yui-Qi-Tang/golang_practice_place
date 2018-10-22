@@ -5,7 +5,6 @@ import (
 	"log"
 	"fmt"
 	"github.com/gorilla/websocket"
-	// "html/template"
 )
 
 const indexHTML = `<html>
@@ -25,10 +24,9 @@ var upgrader = websocket.Upgrader{
     WriteBufferSize: 1024,
 }
 
-type msg struct {
-	Num int
-}
+var clients = make(map[*user]bool)
 
+var flag = make(chan bool)
 
 func CreateServer(config *ServerConfig) {
 	log.Printf("start server at %s\n", config.Port)
@@ -42,6 +40,14 @@ func CreateServer(config *ServerConfig) {
 	log.Fatal(
 		http.ListenAndServeTLS(config.Port, config.Crt, config.Key, nil),
 	)
+	//http.ListenAndServe(config.Port, nil)
+
+}
+
+func StartService() {
+	http.HandleFunc("/", index)
+	http.HandleFunc("/test", test)
+	http.HandleFunc("/socket/handler", webSocketHandle)
 }
 
 func test(w http.ResponseWriter, r *http.Request) {
@@ -79,15 +85,59 @@ func webSocketHandle(w http.ResponseWriter, r *http.Request) {
         log.Println(err)
         return
 	}
-	go echo(conn)
+
+	// allocate user id
+    new_user_id := generateUserId()
+	for k, _ := range clients {
+		if k.id == new_user_id {
+			new_user_id = generateUserId()
+			continue
+		}
+	}
+	
+	sendFirstJoinMsg(conn, new_user_id)	
+	// add new user
+	new_user := &user{wsconn: conn, id: new_user_id}
+	clients[new_user] = true
+	// go echo(conn)
+	go chatHandle(new_user)	
 }
 
-func StartService() {
-	http.HandleFunc("/", index)
-	http.HandleFunc("/test", test)
-	http.HandleFunc("/socket/handler", webSocketHandle)
+func sendFirstJoinMsg(conn *websocket.Conn, guess_id int) {
+	welcome := &msg{Text: "Hello!!Wellcome join us!!", MyId: guess_id, To: nil, From: nil}
+    conn.WriteJSON(welcome)
 }
 
+func chatHandle(chater *user) {
+	for {
+		m := msg{} // custom msg
+		err := chater.wsconn.ReadJSON(&m)
+		if err != nil {
+			fmt.Println("Error reading json.", err)
+			chater.wsconn.Close()
+			delete(clients, chater)
+			fmt.Println(clients)
+			flag <- false
+		}
+
+		fmt.Printf("Got message: %#v\n", m)
+		// board cast msg
+		for k, _ := range clients {
+			if k.id != chater.id {
+				m.From = chater.id
+				m.MyId = nil
+				
+			    err := k.wsconn.WriteJSON(m)
+			    if err != nil {
+			    	fmt.Printf("send failed!")
+			    }
+		    }
+		}
+
+	}
+}
+
+/*
 func echo(conn *websocket.Conn) {
 	for {
 		m := msg{}
@@ -95,12 +145,24 @@ func echo(conn *websocket.Conn) {
 		err := conn.ReadJSON(&m)
 		if err != nil {
 			fmt.Println("Error reading json.", err)
+			conn.Close()
+			delete(clients, conn)
+			fmt.Println(clients)
+			flag <- false
 		}
 
 		fmt.Printf("Got message: %#v\n", m)
+
+		for k, _ := range clients {
+			resp := []byte("You talkin' to me?")
+			err := k.WriteMessage(1, resp)
+			if err != nil {
+				fmt.Printf("send failed!")
+			}
+		}
 
 		if err = conn.WriteJSON(m); err != nil {
 			fmt.Println(err)
 		}
 	}
-}
+}*/
