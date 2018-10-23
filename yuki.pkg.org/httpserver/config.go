@@ -1,14 +1,15 @@
 package httpserver
 
-type HttpsConfig struct {
-	Port string
-	Crt string
-	Key string
+// HTTPSConfig : config for https setup
+type HTTPSConfig struct {
+	Port           string
+	Crt            string
+	Key            string
 	StaticFilePath string
 }
 
-type HttpConfig struct {
-	Port string
+// HTTPConfig : config for http setup
+type HTTPConfig struct {
+	Port           string
 	StaticFilePath string
 }
-

@@ -11,32 +11,29 @@ package main // this is package name
 
 import (
 	"fmt"
-	tester "yuki.pkg.org/sayhi"
-	tools "yuki.pkg.org/tools"
-	// apiRunner "yuki.pkg.org/webapi"
-	"yuki.pkg.org/basictypes"
-	// "yuki.pkg.org/serverpush"
+	"yuki.pkg.org/basictypes" // "yuki.pkg.org/serverpush"
 	"yuki.pkg.org/httpserver"
+	tester "yuki.pkg.org/sayhi"
+	tools "yuki.pkg.org/tools" // apiRunner "yuki.pkg.org/webapi"
 )
-
 
 func main() {
 	/*
 		Print the init string of sayhi package, and use SayHi function exported from package
 	*/
 	tester.SayHi() // return "Hi"
-	
+
 	/*
 		A practice for golang that remove duplicated element of a integer array in O(n)
-	*/	
+	*/
 	target := []int{1, 2, 3, 3, 19, 6, 6}
 	tools.SetArraySize(target)
 	newArray := tools.RemoveDupElement(target)
 	fmt.Println("The duplicated element answer: ")
 	fmt.Println(newArray)
-	
+
 	/*
-	    Basic type
+	   Basic type
 	*/
 
 	// :Create people instance and display
@@ -45,24 +42,24 @@ func main() {
 	oldInfo := basictype.NewPerson(p1.GetPersonName(), p1.GetPersonAges())
 	p1.SetPersonName("Yui Qi Tang")
 	p1.SetPersonAges(30)
-	
+
 	fmt.Printf(
 		"update people name from: %s to: %s\n",
 		oldInfo.GetPersonName(),
 		p1.GetPersonName(),
 	)
-	
+
 	fmt.Printf(
 		"update people ages from: %d to: %d yaers old\n",
 		oldInfo.GetPersonAges(),
 		p1.GetPersonAges(),
 	)
-    // :display pointer value of p1
+	// :display pointer value of p1
 	p1ptr := &p1
 	fmt.Printf("%p\n", p1ptr)
 
 	// :group people
-	group1 := make(map[string]interface{
+	group1 := make(map[string]interface {
 		GetPersonName() string // for person struct GetPersonName()
 		GetPersonAges() int    // for person struct GetPersonAges()
 	})
@@ -73,7 +70,7 @@ func main() {
 	}
 
 	/*
-	    Just run gogin web framework
+	   Just run gogin web framework
 	*/
 	// apiRunner.RunGoGin()
 
@@ -83,21 +80,24 @@ func main() {
 	// serverpush.Demonstration()
 
 	/*
-	    My Http server
+	   My Http server
 	*/
 	// enable http server
-	httpConfig := &httpserver.HttpConfig{Port: ":8001", StaticFilePath: "./test"}
-	simpleHttp := httpserver.CreateHttpServer(httpConfig, "my http server 1")
-	go simpleHttp.Start()
-    // enable https server	
-	serverConfig := &httpserver.HttpsConfig{
-		Port: ":8000",
-		Crt: "http2server/server.crt",
-		Key: "http2server/server.key",
+	c := make(chan bool, 1)
+	httpConfig := &httpserver.HTTPConfig{Port: ":8001", StaticFilePath: "./test"}
+	simpleHTTP := httpserver.CreateHTTPServer(httpConfig, "my http server 1")
+	go simpleHTTP.StartRutine(c)
+
+	// enable https server
+	serverConfig := &httpserver.HTTPSConfig{
+		Port:           ":8000",
+		Crt:            "http2server/server.crt",
+		Key:            "http2server/server.key",
 		StaticFilePath: "./test",
 	}
-	s1 := httpserver.CreateHttpTlsServer(serverConfig, "my https server 1")
-	go (s1).Start()
+	s1 := httpserver.CreateHTTPTlsServer(serverConfig, "my https server 1")
+	go s1.Start()
 
+	<-c
 
 }
