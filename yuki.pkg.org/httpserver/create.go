@@ -66,23 +66,3 @@ func CreateHTTPTlsServer(c *HTTPSConfig, serverName string) *server {
 
 	return newServer
 }
-
-// Start : start service
-func (s *server) Start() {
-	logger.InfoLog("Server: "+s.name+" is starting at "+s.instance.Addr+"...", "Start()")
-
-	if !s.tls {
-		logger.InfoLog("Http server Listening...", "Start()")
-		s.instance.ListenAndServe()
-	} else {
-		logger.InfoLog("Https server Listening...", "Start()")
-		s.instance.ListenAndServeTLS(s.certFile, s.keyFile)
-	}
-}
-
-// StartRutine : wrap Start() for gorutine
-func (s *server) StartRutine(ch chan bool) {
-	logger.InfoLog("Start http service with gorutine", "StartRutine()")
-	s.Start()
-	ch <- false
-}
