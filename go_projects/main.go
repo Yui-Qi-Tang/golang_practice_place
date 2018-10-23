@@ -16,6 +16,7 @@ import (
 	// apiRunner "yuki.pkg.org/webapi"
 	"yuki.pkg.org/basictypes"
 	// "yuki.pkg.org/serverpush"
+	"yuki.pkg.org/httpserver"
 )
 
 
@@ -80,4 +81,23 @@ func main() {
 		Http2 sever push demo
 	*/
 	// serverpush.Demonstration()
+
+	/*
+	    My Http server
+	*/
+	// enable http server
+	httpConfig := &httpserver.HttpConfig{Port: ":8001", StaticFilePath: "./test"}
+	simpleHttp := httpserver.CreateHttpServer(httpConfig, "my http server 1")
+	go simpleHttp.Start()
+    // enable https server	
+	serverConfig := &httpserver.HttpsConfig{
+		Port: ":8000",
+		Crt: "http2server/server.crt",
+		Key: "http2server/server.key",
+		StaticFilePath: "./test",
+	}
+	s1 := httpserver.CreateHttpTlsServer(serverConfig, "my https server 1")
+	go (s1).Start()
+
+
 }

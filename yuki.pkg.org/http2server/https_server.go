@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
+	// "io/ioutil"
 	"github.com/gorilla/websocket"
 )
 
@@ -74,6 +74,9 @@ func index(w http.ResponseWriter, r *http.Request) {
 		if err := pusher.Push("/static/style.css", nil); err != nil {
 			log.Printf("Failed to push: %v", err)
 		}
+		if err := pusher.Push("/static/test.js", nil); err != nil {
+			log.Printf("Failed to push: %v", err)
+		}
 	}
 	fmt.Fprintf(w, indexHTML)
 }
@@ -83,6 +86,29 @@ func webSocketHandle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Origin not allowed", 403)
 		return
 	}
+    
+	pusher, ok := w.(http.Pusher)
+	fmt.Println("pusher status: ", ok)
+	if ok {
+		options := &http.PushOptions{
+			Header: http.Header{
+				"Accept-Encoding": r.Header["Accept-Encoding"],
+			},
+		}
+		fmt.Println("Push ok!")
+		// Push is supported. Try pushing rather than
+		// waiting for the browser request these static assets.
+		if err := pusher.Push("/static/app.js", nil); err != nil {
+			log.Printf("Failed to push: %v", err)
+		}
+		if err := pusher.Push("/static/style.css", nil); err != nil {
+			log.Printf("Failed to push: %v", err)
+		}
+		if err := pusher.Push("/static/test.js", options); err != nil {
+			log.Printf("Failed to push: %v", err)
+		}
+	}
+	// establish web socket
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println(err)
