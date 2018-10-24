@@ -18,7 +18,7 @@ type server struct {
 	tls      bool // consider map? {} / {certFile: '/path/to/file', keyFile: '/p/t/f'}
 	certFile string
 	keyFile  string
-	instance *http.Server // let this as private, for now, I let it to be 'EXPORED'!!
+	instance *http.Server
 }
 
 // CreateHTTPServer : create server support Http
@@ -39,7 +39,7 @@ func CreateHTTPServer(c *HTTPConfig, serverName string) *server {
 	newServer := new(server)
 	newServer.name = serverName
 	newServer.tls = false
-	newServer.instance = s // TODO: Let this as private
+	newServer.instance = s
 
 	return newServer
 }
@@ -62,7 +62,6 @@ func CreateHTTPTlsServer(c *HTTPSConfig, serverName string) *server {
 	newServer.tls = true
 	newServer.certFile = c.Crt
 	newServer.keyFile = c.Key
-	newServer.instance = s // Let this as private
-
+	newServer.instance = s
 	return newServer
 }
