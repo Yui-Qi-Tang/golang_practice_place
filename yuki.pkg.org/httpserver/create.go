@@ -13,6 +13,11 @@ type tlsInfo interface {
 }
 */
 
+type (
+	Resp http.ResponseWriter
+	Req *http.Request
+)
+
 type server struct {
 	name     string
 	tls      bool // consider map? {} / {certFile: '/path/to/file', keyFile: '/p/t/f'}
@@ -68,14 +73,14 @@ func CreateHTTPTlsServer(c *HTTPSConfig, serverName string) *server {
 }
 
 // setHandleFunc : return func(w http.ResponseWriter, r *http.Request)
-func setHandleFunc(inject func(w interface{}, r interface{})) func(w http.ResponseWriter, r *http.Request) {
+func setHandleFunc(inject func(w Resp, r Req)) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		inject(w, r)
 	}
 }
 // SetHandleFunc : A setHandlerFunc wrapper
-func SetHandleFunc(inject func(w interface{}, r interface{})) {
+func SetHandleFunc(path string, inject func(w Resp, r Req)) {
 	logger.InfoLog("Set Handle function", "SetHandleFunc")
 	s := setHandleFunc(inject)
-	http.HandleFunc("/test", s)
+	http.HandleFunc(path, s)
 }
