@@ -80,15 +80,8 @@ func main() {
 	// serverpush.Demonstration()
 
 	/*
-	   My Http server
+	   My HTTP/HTTPS server
 	*/
-	// enable http server
-	c := make(chan bool, 1)
-	httpConfig := &httpserver.HTTPConfig{Port: ":8001", StaticFilePath: "./test"}
-	simpleHTTP := httpserver.CreateHTTPServer(httpConfig, "my http server 1")
-	go simpleHTTP.StartRutine(c)
-	<-c
-
 	// enable https server
 	/*
 	serverConfig := &httpserver.HTTPSConfig{
@@ -98,9 +91,18 @@ func main() {
 		StaticFilePath: "./test",
 	}
 	s1 := httpserver.CreateHTTPTlsServer(serverConfig, "my https server 1")
-	go s1.Start()
+	s1.Start()
 
 	<-c
 	*/
+
+	// enable http server
+	c := make(chan bool, 1)
+	httpConfig := &httpserver.HTTPConfig{Port: ":8001", StaticFilePath: "./test"}
+	simpleHTTP := httpserver.CreateHTTPServer(httpConfig, "my http server 1")
+	go simpleHTTP.StartRutine(c)
+	<-c
+
+	
 
 }

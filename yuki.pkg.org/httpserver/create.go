@@ -27,6 +27,7 @@ func CreateHTTPServer(c *HTTPConfig, serverName string) *server {
 	logTag := "CreateHTTPServer()"
 
 	logger.InfoLog("Create net/http server", logTag)
+
 	s := &http.Server{
 		Addr: c.Port,
 		// Handler:        myHandler,
@@ -64,4 +65,17 @@ func CreateHTTPTlsServer(c *HTTPSConfig, serverName string) *server {
 	newServer.keyFile = c.Key
 	newServer.instance = s
 	return newServer
+}
+
+// setHandleFunc : return func(w http.ResponseWriter, r *http.Request)
+func setHandleFunc(inject func(w interface{}, r interface{})) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		inject(w, r)
+	}
+}
+// SetHandleFunc : A setHandlerFunc wrapper
+func SetHandleFunc(inject func(w interface{}, r interface{})) {
+	logger.InfoLog("Set Handle function", "SetHandleFunc")
+	s := setHandleFunc(inject)
+	http.HandleFunc("/test", s)
 }
