@@ -13,6 +13,7 @@ type tlsInfo interface {
 }
 */
 
+// Exported those data type to set inject function for SetHandleFun use
 type (
 	Resp http.ResponseWriter
 	Req *http.Request
