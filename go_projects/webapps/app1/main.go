@@ -16,7 +16,13 @@ func main() {
 	// Pass test function to SetHandleFunc
 	httpserver.SetHandleFunc("/test", test)
 	httpserver.SetHandleFunc("/test2", test2)
-	httpConfig := &httpserver.HTTPConfig{Port: ":8001", StaticFilePath: "./test"}
+	// set css and js static path of website
+	httpserver.SetStaticFile("/static/js", "static/js")
+	httpserver.SetStaticFile("/static/css", "static/css")
+	// server config
+	httpConfig := &httpserver.HTTPConfig{
+		Port: ":8001",
+	}
 	simpleHTTP := httpserver.CreateHTTPServer(httpConfig, "my http server 1")
 	simpleHTTP.Start()
 }

@@ -85,3 +85,8 @@ func SetHandleFunc(path string, inject func(w Resp, r Req)) {
 	s := setHandleFunc(inject)
 	http.HandleFunc(path, s)
 }
+
+// SetStaticFile
+func SetStaticFile(staticUrl string, staticFilePath string) {
+	http.Handle(staticUrl, http.StripPrefix(staticUrl, http.FileServer(http.Dir(staticFilePath))))
+}

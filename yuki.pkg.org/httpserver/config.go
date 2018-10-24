@@ -5,11 +5,9 @@ type HTTPSConfig struct {
 	Port           string
 	Crt            string
 	Key            string
-	StaticFilePath string
 }
 
 // HTTPConfig : config for http setup
 type HTTPConfig struct {
 	Port           string
-	StaticFilePath string
 }
