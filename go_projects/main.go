@@ -87,8 +87,10 @@ func main() {
 	httpConfig := &httpserver.HTTPConfig{Port: ":8001", StaticFilePath: "./test"}
 	simpleHTTP := httpserver.CreateHTTPServer(httpConfig, "my http server 1")
 	go simpleHTTP.StartRutine(c)
+	<-c
 
 	// enable https server
+	/*
 	serverConfig := &httpserver.HTTPSConfig{
 		Port:           ":8000",
 		Crt:            "http2server/server.crt",
@@ -99,5 +101,6 @@ func main() {
 	go s1.Start()
 
 	<-c
+	*/
 
 }

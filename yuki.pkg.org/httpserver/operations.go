@@ -19,5 +19,5 @@ func (s *server) Start() {
 func (s *server) StartRutine(ch chan bool) {
 	logger.InfoLog("Start http service with gorutine", "StartRutine()")
 	s.Start()
-	ch <- false
+	ch <- false // TODO: add set ch as flase condition
 }
