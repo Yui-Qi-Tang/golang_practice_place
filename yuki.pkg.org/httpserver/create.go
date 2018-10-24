@@ -16,7 +16,7 @@ type tlsInfo interface {
 // Exported those data type to set inject function for SetHandleFun use
 type (
 	Resp http.ResponseWriter
-	Req *http.Request
+	Req  *http.Request
 )
 
 type server struct {
@@ -79,6 +79,7 @@ func setHandleFunc(inject func(w Resp, r Req)) func(w http.ResponseWriter, r *ht
 		inject(w, r)
 	}
 }
+
 // SetHandleFunc : A setHandlerFunc wrapper
 func SetHandleFunc(path string, inject func(w Resp, r Req)) {
 	logger.InfoLog("Set Handle function", "SetHandleFunc")
@@ -86,7 +87,7 @@ func SetHandleFunc(path string, inject func(w Resp, r Req)) {
 	http.HandleFunc(path, s)
 }
 
-// SetStaticFile
-func SetStaticFile(staticUrl string, staticFilePath string) {
-	http.Handle(staticUrl, http.StripPrefix(staticUrl, http.FileServer(http.Dir(staticFilePath))))
+// SetStaticFile : set static for http module
+func SetStaticFile(staticURL string, staticFilePath string) {
+	http.Handle(staticURL, http.StripPrefix(staticURL, http.FileServer(http.Dir(staticFilePath))))
 }

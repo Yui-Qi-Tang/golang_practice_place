@@ -21,12 +21,3 @@ func (s *server) StartRutine(ch chan bool) {
 	s.Start()
 	ch <- false // TODO: add set ch as flase condition
 }
-
-/*
-func (s *server) setStaticFile() {
-	s.instance.Handle(
-		"/static/",
-		s.instance.StripPrefix("/static/", s.instance.FileServer(s.instance.Dir(s.StaticFilePath))),
-	)
-}
-*/
